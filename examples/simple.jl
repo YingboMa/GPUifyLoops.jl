@@ -18,8 +18,8 @@ kernel(data)
     using CuArrays
     using CUDAnative
 
-    @eval function kernel(A::CuArray)
-        @cuda threads=length(A) kernel(CUDA(), A)
+    function kernel(A::CuArray)
+        launch(kernel, CPU(), A, threads=length(A))
     end
 
     data = CuArray{Float32}(undef, 1024)
